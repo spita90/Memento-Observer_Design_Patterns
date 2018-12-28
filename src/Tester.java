@@ -4,10 +4,10 @@ import java.awt.event.ActionListener;
 import java.util.Scanner;
 import javax.swing.*;
 
-public final class GUIHandler extends JFrame {
+public final class Tester extends JFrame {
 
     public static void main(String[] args) {
-        new GUIHandler();
+        new Tester();
     }
 
     private JButton undoButton, redoButton;
@@ -18,7 +18,7 @@ public final class GUIHandler extends JFrame {
     private Scanner scanner = new Scanner(System.in);
     private boolean running = true;
 
-    private GUIHandler() {
+    private Tester() {
         this.setSize(450, 250);
         this.setTitle("Memento/Observer Design Patterns");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
