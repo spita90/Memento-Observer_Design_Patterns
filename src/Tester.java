@@ -1,34 +1,30 @@
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Scanner;
-import javax.swing.*;
 
-public final class Tester extends JFrame {
+final class Tester extends JFrame {
 
-    public static void main(String[] args) {
-        new Tester();
-    }
-
-    private JButton undoButton, redoButton;
-    private Caretaker caretaker = Caretaker.Instance();
-    private ObservableOriginator observableOriginator = ObservableOriginator.Instance();
+    private final JButton undoButton, redoButton;
+    private final Caretaker caretaker = Caretaker.Instance();
+    private final ObservableOriginator observableOriginator = ObservableOriginator.Instance();
+    private final Scanner scanner = new Scanner(System.in);
     private int savedStates = 0;
     private int currentState = 0;
-    private Scanner scanner = new Scanner(System.in);
     private boolean running = true;
 
     private Tester() {
         this.setSize(450, 250);
         this.setTitle("Memento/Observer Design Patterns");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JPanel panel = new JPanel();
-        JTextArea textArea = new JTextArea(10, 40);
+        final JPanel panel = new JPanel();
+        final JTextArea textArea = new JTextArea(10, 40);
         panel.add(textArea);
         textArea.setEnabled(false);
         textArea.setDisabledTextColor(Color.BLACK);
-        ButtonListener undoListener = new ButtonListener();
-        ButtonListener redoListener = new ButtonListener();
+        final ButtonListener undoListener = new ButtonListener();
+        final ButtonListener redoListener = new ButtonListener();
         undoButton = new JButton("Undo");
         undoButton.addActionListener(undoListener);
         redoButton = new JButton("Redo");
@@ -39,20 +35,26 @@ public final class Tester extends JFrame {
         redoButton.setEnabled(false);
         this.add(panel);
         this.setVisible(true);
-        StateObserver stateObserver = new StateObserver(textArea);
+
+        final StateObserver stateObserver = new StateObserver(textArea);
         observableOriginator.addObserver(stateObserver);
+
         while (running) {
             running = false;
-            KeyboardInputListener kil = new KeyboardInputListener();
+            final KeyboardInputListener kil = new KeyboardInputListener();
             kil.enableKeyboardListener();
         }
+    }
+
+    public static void main(String[] args) {
+        new Tester();
     }
 
     final class KeyboardInputListener {
 
         void enableKeyboardListener() {
             System.out.println("\nInsert text\n");
-            String text = scanner.nextLine();
+            final String text = scanner.nextLine();
             if (currentState < savedStates) {
                 caretaker.deleteMementoRange(currentState, savedStates);
                 savedStates = savedStates - (savedStates - currentState);

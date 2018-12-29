@@ -1,6 +1,6 @@
 final class Memento {
 
-    private String state;
+    private final String state;
 
     Memento(String stateToSet) {
         state = stateToSet;

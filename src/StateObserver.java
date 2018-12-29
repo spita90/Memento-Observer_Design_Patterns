@@ -2,9 +2,9 @@ import javax.swing.*;
 import java.util.Observable;
 import java.util.Observer;
 
-public class StateObserver implements Observer {
+final class StateObserver implements Observer {
 
-    private JTextArea textArea;
+    private final JTextArea textArea;
 
     StateObserver(JTextArea textArea) {
         this.textArea = textArea;

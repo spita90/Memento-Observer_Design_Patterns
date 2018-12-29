@@ -2,8 +2,8 @@ import java.util.ArrayList;
 
 final class Caretaker {
 
-    private ArrayList<Memento> savedStates = new ArrayList<>();
     private static Caretaker instance = null;
+    private final ArrayList<Memento> savedStates = new ArrayList<>();
 
     private Caretaker() {
     }

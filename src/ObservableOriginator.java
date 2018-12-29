@@ -2,8 +2,8 @@ import java.util.Observable;
 
 final class ObservableOriginator extends Observable {
 
-    private String state;
     private static ObservableOriginator instance = null;
+    private String state;
 
     private ObservableOriginator() {
     }
@@ -15,14 +15,14 @@ final class ObservableOriginator extends Observable {
         return instance;
     }
 
+    String getState() {
+        return state;
+    }
+
     void setState(String newState) {
         state = newState;
         setChanged();
         notifyObservers();
-    }
-
-    String getState() {
-        return state;
     }
 
     Memento createMemento() {
