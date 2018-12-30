@@ -1,18 +1,16 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Scanner;
 
 final class Tester extends JFrame {
 
-    private final JButton undoButton, redoButton;
-    private final Caretaker caretaker = Caretaker.Instance();
-    private final ObservableOriginator observableOriginator = ObservableOriginator.Instance();
-    private final Scanner scanner = new Scanner(System.in);
-    private int savedStates = 0;
-    private int currentState = 0;
-    private boolean running = true;
+    final static JButton undoButton = new JButton("Undo");
+    final static JButton redoButton = new JButton("Redo");
+    final static ObservableOriginator observableOriginator = ObservableOriginator.Instance();
+    static Integer savedStates = 0;
+    static Integer currentState = 0;
+    private final static Scanner scanner = new Scanner(System.in);
+    private static Boolean running = true;
 
     private Tester() {
         this.setSize(450, 250);
@@ -25,9 +23,7 @@ final class Tester extends JFrame {
         textArea.setDisabledTextColor(Color.BLACK);
         final ButtonListener undoListener = new ButtonListener();
         final ButtonListener redoListener = new ButtonListener();
-        undoButton = new JButton("Undo");
         undoButton.addActionListener(undoListener);
-        redoButton = new JButton("Redo");
         redoButton.addActionListener(redoListener);
         panel.add(undoButton);
         panel.add(redoButton);
@@ -41,8 +37,7 @@ final class Tester extends JFrame {
 
         while (running) {
             running = false;
-            final KeyboardInputListener kil = new KeyboardInputListener();
-            kil.enableKeyboardListener();
+            enableKeyboardListener();
         }
     }
 
@@ -50,46 +45,22 @@ final class Tester extends JFrame {
         new Tester();
     }
 
-    final class KeyboardInputListener {
 
-        void enableKeyboardListener() {
-            System.out.println("\nInsert text\n");
-            final String text = scanner.nextLine();
-            if (currentState < savedStates) {
-                caretaker.deleteMementoRange(currentState, savedStates);
-                savedStates = savedStates - (savedStates - currentState);
-            }
-            savedStates++;
-            currentState++;
-            observableOriginator.setState(text);
-            caretaker.addMemento(observableOriginator.createMemento());
-            if (currentState > 1)
-                undoButton.setEnabled(true);
-            redoButton.setEnabled(false);
-            running = true;
+    private void enableKeyboardListener() {
+        System.out.println("\nInsert text\n");
+        final String text = scanner.nextLine();
+        if (currentState < savedStates) {
+            Caretaker.deleteMementoRange(currentState, savedStates);
+            savedStates = savedStates - (savedStates - currentState);
         }
-
-    }
-
-    final class ButtonListener implements ActionListener {
-
-        public void actionPerformed(ActionEvent e) {
-            if (e.getSource() == undoButton) {
-                currentState--;
-                observableOriginator.restoreFromMemento(caretaker.getMemento(currentState - 1));
-                redoButton.setEnabled(true);
-                if (currentState <= 1)
-                    undoButton.setEnabled(false);
-            } else if (e.getSource() == redoButton) {
-                currentState++;
-                observableOriginator.restoreFromMemento(caretaker.getMemento(currentState - 1));
-                undoButton.setEnabled(true);
-                if ((savedStates - 1) < currentState) {
-                    redoButton.setEnabled(false);
-                }
-            }
-        }
-
+        savedStates++;
+        currentState++;
+        observableOriginator.setState(text);
+        Caretaker.addMemento(observableOriginator.createMemento());
+        if (currentState > 1)
+            undoButton.setEnabled(true);
+        redoButton.setEnabled(false);
+        running = true;
     }
 
 }
