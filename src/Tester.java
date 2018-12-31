@@ -7,9 +7,9 @@ final class Tester extends JFrame {
     final static JButton undoButton = new JButton("Undo");
     final static JButton redoButton = new JButton("Redo");
     final static ObservableOriginator observableOriginator = ObservableOriginator.Instance();
+    private final static Scanner scanner = new Scanner(System.in);
     static Integer savedStates = 0;
     static Integer currentState = 0;
-    private final static Scanner scanner = new Scanner(System.in);
     private static Boolean running = true;
 
     private Tester() {

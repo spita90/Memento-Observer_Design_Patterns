@@ -6,6 +6,10 @@ final class Memento {
         state = stateToSet;
     }
 
+    Memento(Memento memento) {
+        state = memento.getState();
+    }
+
     String getState() {
         return state;
     }

@@ -6,7 +6,7 @@ final class StateObserver implements Observer {
 
     private final JTextArea textArea;
 
-    StateObserver(JTextArea textArea) {
+    StateObserver(JTextArea textArea) {                         //not a singleton - there can be many StateObservers for many textAreas
         this.textArea = textArea;
     }
 
