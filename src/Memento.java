@@ -3,15 +3,15 @@ final class Memento {
     private final String state;
 
     Memento(String stateToSet) {
-        state = stateToSet;
+        state = new String(stateToSet);                 //defensive copy
     }
 
     Memento(Memento memento) {
-        state = memento.getState();
+        state = new String(memento.getState());         //defensive copy
     }
 
     String getState() {
-        return state;
+        return new String(state);                       //defensive copy
     }
 
 }

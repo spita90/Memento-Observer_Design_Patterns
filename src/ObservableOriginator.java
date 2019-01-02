@@ -16,17 +16,17 @@ final class ObservableOriginator extends Observable {
     }
 
     String getState() {
-        return state;
+        return new String(state);                           //defensive copy
     }
 
     void setState(String newState) {
-        state = newState;
+        state = new String(newState);                       //defensive copy
         setChanged();
         notifyObservers();
     }
 
     Memento createMemento() {
-        return new Memento(state);
+        return new Memento(new String(state));              //defensive copy
     }
 
     void restoreFromMemento(Memento memento) {
